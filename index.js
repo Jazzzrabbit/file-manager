@@ -2,7 +2,7 @@ import { getUsername, init, getDir, exitApp, lineParser } from "./src/utils/util
 import * as readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
 import os from 'os';
-import { changeDirectory, upOneDirectory } from "./src/handlers/navigation.js";
+import { changeDirectory, list, upOneDirectory } from "./src/handlers/navigation.js";
 import { ERROR_MSG } from "./src/model/env.js";
 
 const rl = readline.createInterface({ input, output });
@@ -26,6 +26,10 @@ rl.on('line', line => {
       }
       case ('cd'): {
         changeDirectory(args);
+        break;
+      }
+      case ('ls'): {
+        list();
         break;
       }
     }
