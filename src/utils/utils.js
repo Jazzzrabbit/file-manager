@@ -9,17 +9,21 @@ export const welcomeMessage = username => {
   console.log(`Welcome to the File Manager, ${username}!`);
 }
 
-export const exit = username => {
-  console.log(`Thank you for using File Manager, ${username}, goodbye!`);
-  process.exit();
-}
-
 export const getHomeDir = (homeDir) => {
   console.log(`You are currently in ${homeDir}`);
 }
 
 export const getDir = () => {
   console.log(`You are currently in ${process.cwd()}`);
+}
+
+export const getUserOS = () => {
+  return process.platform;
+}
+
+export const exitApp = username => {
+  console.log(`Thank you for using File Manager, ${username}, goodbye!`);
+  process.exit();
 }
 
 export const init = (username, userHomeDir) => {
