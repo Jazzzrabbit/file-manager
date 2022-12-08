@@ -1,16 +1,19 @@
-export const exitApp = username => {
-  console.log(`Thank you for using File Manager, ${username}, goodbye!`);
-  process.exit();
-}
+import os from 'os';
+import { ERROR_MSG } from '../model/env.js';
 
-export const upOneDirectory = userOs => {
-  const currentDir = process.cwd();
-  const separatorIndex = userOs === 'win32' ? currentDir.lastIndexOf('\\') : currentDir.lastIndexOf('/');
-  const nextDir = currentDir.slice(0, separatorIndex);
-
+export const upOneDirectory = () => {
   try {
-    process.chdir(nextDir);
+    process.chdir('..');
   } catch {
     return null;
+  }
+}
+
+export const changeDirectory = args => {
+  try {
+    const arg = args.length ? args[0] : os.homedir();
+    process.chdir(arg);
+  } catch {
+    console.log(ERROR_MSG);
   }
 }

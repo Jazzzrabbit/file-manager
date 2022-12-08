@@ -17,13 +17,18 @@ export const getDir = () => {
   console.log(`You are currently in ${process.cwd()}`);
 }
 
-export const getUserOS = () => {
-  return process.platform;
-}
-
 export const exitApp = username => {
   console.log(`Thank you for using File Manager, ${username}, goodbye!`);
   process.exit();
+}
+
+export const lineParser = line => {
+  const [command, ...args] = line.trim().split(' ');
+  const isNoArgsCommand = ['up', 'cd', '.exit'].some(item => item === command) && !args.length;
+  const isOneArgCommand = ['cd', 'ls', 'cat', 'add', 'rm', 'os', 'hash'].some(item => item === command) && args.length === 1;
+  const isTwoArgsCommand = ['rn', 'cp', 'mv', 'compress', 'decompress'].some(item => item === command) && args.length === 2;
+
+  return isOneArgCommand || isTwoArgsCommand || isNoArgsCommand ? [command, args] : null;
 }
 
 export const init = (username, userHomeDir) => {
