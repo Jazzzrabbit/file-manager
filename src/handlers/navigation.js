@@ -6,8 +6,8 @@ import path from 'path';
 export const upOneDirectory = () => {
   try {
     process.chdir('..');
-  } catch {
-    return null;
+  } catch (e) {
+    console.log(e);
   }
 }
 
@@ -22,9 +22,15 @@ export const changeDirectory = args => {
 
 export const list = async () => {
   try {
-    const list = await fs.readdir(path.resolve(process.cwd()));
-    console.table(list);
-  } catch {
-    return null;
+    const list = await fs.readdir(path.resolve(process.cwd()), { withFileTypes: true });
+    const unsortedList = list
+      .map(file => file.isDirectory() ? { value: file.name, type: 'folder' } : { value: file.name, type: 'file' });
+    const sortedList = unsortedList
+      .sort((a, b) => a.value.toLowerCase() < b.value.toLowerCase() ? 1 : -1)
+      .sort((a, b) => a.type < b.type ? 1 : -1);
+  
+    sortedList.length ? console.table(sortedList) : console.log('This folder is empty.');
+  } catch (e) {
+    console.log(e);
   }
 }

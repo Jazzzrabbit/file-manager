@@ -35,9 +35,11 @@ rl.on('line', line => {
     }
   } catch {
     console.log(ERROR_MSG);
+  } finally {
+    setTimeout(() => {
+      getDir(); 
+    }, 100);
   }
-
-  getDir();
 })
 
 rl.on('SIGINT', () => exitApp(username));
