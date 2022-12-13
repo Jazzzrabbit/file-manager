@@ -1,5 +1,6 @@
 import { ERROR_MSG } from "../model/env.js";
 import { exitApp, getDir, lineParser } from "../utils/utils.js";
+import { cat } from "./basic.js";
 import { changeDirectory, list, upOneDirectory } from "./navigation.js";
 
 export const rlHandler = (line, username) => {
@@ -24,9 +25,13 @@ export const rlHandler = (line, username) => {
           await list();
           break;
         }
+        case ('cat'): {
+          await cat(args);
+          break;
+        }
       }
     } catch {
-      console.log(ERROR_MSG);
+      console.error(ERROR_MSG);
     } finally {
       resolve();
       getDir();

@@ -1,6 +1,7 @@
 import os from 'os';
 import fs from 'fs/promises';
 import path from 'path';
+import { OP_FAILED } from '../model/env.js';
 
 export const upOneDirectory = () => {
   process.chdir('..');
@@ -8,7 +9,11 @@ export const upOneDirectory = () => {
 
 export const changeDirectory = args => {
   const arg = typeof args === 'string' ? args : args.length ? args[0] : os.homedir();
-  process.chdir(path.resolve(arg));
+  try {
+    process.chdir(path.resolve(arg));
+  } catch {
+    console.error(OP_FAILED);
+  }
 }
 
 export const list = async () => {

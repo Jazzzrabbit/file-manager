@@ -29,7 +29,7 @@ export const lineParser = line => {
   if (regex.test(args)) args = args.join(' ').replace(regex, '');
 
   const isNoArgsCommand = ['up', 'cd', 'ls', '.exit'].some(item => item === command) && !args.length || typeof args === 'string';
-  const isOneArgCommand = ['cd', 'cat', 'add', 'rm', 'os', 'hash'].some(item => item === command) && args.length === 1;
+  const isOneArgCommand = ['cd', 'cat', 'add', 'rm', 'os', 'hash'].some(item => item === command) && args.length === 1 || typeof args === 'string';
   const isTwoArgsCommand = ['rn', 'cp', 'mv', 'compress', 'decompress'].some(item => item === command) && args.length === 2;
   
   return isOneArgCommand || isTwoArgsCommand || isNoArgsCommand ? [command, args] : null;
