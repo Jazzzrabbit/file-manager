@@ -20,3 +20,12 @@ export const add = async arg => {
     console.error(OP_FAILED);
   }
 }
+
+export const rename = async args => {
+  const [oldName, newName] = args;
+  try {
+    await fs.rename(path.resolve(oldName), path.resolve(newName));
+  } catch {
+    console.error(OP_FAILED);
+  }
+}

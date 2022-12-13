@@ -25,11 +25,12 @@ export const exitApp = username => {
 export const lineParser = line => {
   let [command, ...args] = line.trim().split(' ');
   const regex = /"|'/g;
+  const splitRegex = /['\"] | ["']/g;
+  
+  if (regex.test(args)) args = args.join(' ').split(splitRegex).map(item => item.replace(regex, ''));
 
-  if (regex.test(args)) args = args.join(' ').replace(regex, '');
-
-  const isNoArgsCommand = ['up', 'cd', 'ls', '.exit'].some(item => item === command) && !args.length || typeof args === 'string';
-  const isOneArgCommand = ['cd', 'cat', 'add', 'rm', 'os', 'hash'].some(item => item === command) && args.length === 1 || typeof args === 'string';
+  const isNoArgsCommand = ['up', 'cd', 'ls', '.exit'].some(item => item === command) && !args.length;
+  const isOneArgCommand = ['cd', 'cat', 'add', 'rm', 'os', 'hash'].some(item => item === command) && args.length === 1;
   const isTwoArgsCommand = ['rn', 'cp', 'mv', 'compress', 'decompress'].some(item => item === command) && args.length === 2;
   
   return isOneArgCommand || isTwoArgsCommand || isNoArgsCommand ? [command, args] : null;

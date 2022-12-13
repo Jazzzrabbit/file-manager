@@ -1,6 +1,6 @@
 import { ERROR_MSG } from "../model/env.js";
 import { exitApp, getDir, lineParser } from "../utils/utils.js";
-import { add, cat } from "./basic.js";
+import { add, cat, rename } from "./basic.js";
 import { changeDirectory, list, upOneDirectory } from "./navigation.js";
 
 export const rlHandler = (line, username) => {
@@ -31,6 +31,10 @@ export const rlHandler = (line, username) => {
         }
         case ('add'): {
           await add(args);
+          break;
+        }
+        case ('rn'): {
+          await rename(args);
           break;
         }
       }
