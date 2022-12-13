@@ -2,7 +2,7 @@ import { ERROR_MSG } from "../model/env.js";
 import { exitApp, getDir, lineParser } from "../utils/utils.js";
 import { changeDirectory, list, upOneDirectory } from "./navigation.js";
 
-export const rlHandler = line => {
+export const rlHandler = (line, username) => {
   return new Promise(async resolve => {
     try {
       const [command, args] = lineParser(line);

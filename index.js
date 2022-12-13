@@ -11,7 +11,7 @@ const userHomeDir = os.homedir();
 init(username, userHomeDir);
 
 rl.on('line', line => {
-  rlHandler(line);
+  rlHandler(line, username);
 });
 
 rl.on('SIGINT', () => exitApp(username));
