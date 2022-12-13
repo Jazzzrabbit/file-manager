@@ -9,5 +9,14 @@ export const cat = async arg => {
     rs.pipe(process.stdout);
   } catch {
     console.error(OP_FAILED);
-  } 
+  }
+}
+
+export const add = async arg => {
+  try {
+    const pathToFile = Array.isArray(arg) ? arg[0] : arg;
+    await fs.writeFile(path.resolve(pathToFile), '');
+  } catch {
+    console.error(OP_FAILED);
+  }
 }
