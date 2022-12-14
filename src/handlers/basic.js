@@ -48,7 +48,15 @@ export const copy = async args => {
 
 export const move = async args => {
   try {
-    await copy(args).then(() => fs.rm(path.resolve(args[0])));
+    await copy(args).then(async () => await fs.rm(path.resolve(args[0])));
+  } catch {
+    console.error(OP_FAILED);
+  }
+}
+
+export const remove = async arg => {
+  try {
+    await fs.rm(path.resolve(arg[0]));
   } catch {
     console.error(OP_FAILED);
   }
