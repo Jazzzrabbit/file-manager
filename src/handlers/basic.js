@@ -1,6 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { OP_FAILED } from '../model/env.js';
+import { createWriteStream } from "fs";
+import { pipeline } from 'stream/promises';
 
 export const cat = async arg => {
   try {
@@ -25,6 +27,20 @@ export const rename = async args => {
   const [oldName, newName] = args;
   try {
     await fs.rename(path.resolve(oldName), path.resolve(newName));
+  } catch {
+    console.error(OP_FAILED);
+  }
+}
+
+export const copy = async args => {
+  const [oldPath, newPath] = args;
+  try {
+    const openedFile = await fs.open(path.resolve(oldPath));
+    const rs = openedFile.createReadStream();
+    const basename = path.basename(oldPath);
+    const ws = createWriteStream(path.resolve(newPath, basename));
+    await pipeline(rs, ws);
+    openedFile.close();
   } catch {
     console.error(OP_FAILED);
   }
