@@ -1,6 +1,7 @@
 import { ERROR_MSG } from "../model/env.js";
 import { exitApp, getDir, lineParser } from "../utils/utils.js";
 import { add, cat, copy, move, remove, rename } from "./basic.js";
+import { getInfo } from "./info.js";
 import { changeDirectory, list, upOneDirectory } from "./navigation.js";
 
 export const rlHandler = (line, username) => {
@@ -47,6 +48,10 @@ export const rlHandler = (line, username) => {
         }
         case ('rm'): {
           await remove(args);
+          break;
+        }
+        case ('os'): {
+          await getInfo(args);
           break;
         }
       }
