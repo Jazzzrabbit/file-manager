@@ -45,3 +45,11 @@ export const copy = async args => {
     console.error(OP_FAILED);
   }
 }
+
+export const move = async args => {
+  try {
+    await copy(args).then(() => fs.rm(path.resolve(args[0])));
+  } catch {
+    console.error(OP_FAILED);
+  }
+}
