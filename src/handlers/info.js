@@ -9,7 +9,7 @@ export const getInfo = async args => {
       break;
     }
     case ('cpus'): {
-      const cpuInfo = os.cpus().map(item => item.model);
+      const cpuInfo = os.cpus().map(({ model, speed }) => ({ model, speed: speed / 1000 + 'GHz' }));
       console.log(`Overall amount of CPUs: ${cpuInfo.length}`);
       console.table(cpuInfo);
       break;
@@ -27,5 +27,5 @@ export const getInfo = async args => {
       break; 
     }
     default: console.log(ERROR_MSG);
-  }
-}
+  };
+};

@@ -4,6 +4,7 @@ import { add, cat, copy, move, remove, rename } from "./basic.js";
 import { hash } from "./hash.js";
 import { getInfo } from "./info.js";
 import { changeDirectory, list, upOneDirectory } from "./navigation.js";
+import { brotliZip } from "./zip.js";
 
 export const rlHandler = (line, username) => {
   return new Promise(async resolve => {
@@ -57,6 +58,14 @@ export const rlHandler = (line, username) => {
         }
         case ('hash'): {
           await hash(args);
+          break;
+        }
+        case ('compress'): {
+          await brotliZip(args, 'zip');
+          break;
+        }
+        case ('decompress'): {
+          await brotliZip(args, 'unzip');
           break;
         }
       }

@@ -5,16 +5,16 @@ import { OP_FAILED } from '../model/env.js';
 
 export const upOneDirectory = () => {
   process.chdir('..');
-}
+};
 
 export const changeDirectory = args => {
-  const arg = typeof args === 'string' ? args : args.length ? args[0] : os.homedir();
+  const arg = args.length ? args[0] : os.homedir();
   try {
     process.chdir(path.resolve(arg));
   } catch {
     console.error(OP_FAILED);
-  }
-}
+  };
+};
 
 export const list = async () => {
   const list = await fs.readdir(path.resolve(process.cwd()), { withFileTypes: true });
@@ -25,4 +25,4 @@ export const list = async () => {
     .sort((a, b) => a.type < b.type ? 1 : -1);
 
   sortedList.length ? console.table(sortedList) : console.log('This folder is empty.');
-}
+};

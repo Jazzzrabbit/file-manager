@@ -11,5 +11,5 @@ export const hash = async arg => {
     console.log(hex);
   } catch {
     console.error(OP_FAILED);
-  }
-}
+  };
+};
