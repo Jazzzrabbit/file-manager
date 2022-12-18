@@ -1,3 +1,6 @@
+import fs from 'fs/promises';
+import path from 'path';
+
 export const getUsername = () => {
   const args = process.argv.slice(2);
   const userCommand = '--username=';
@@ -32,9 +35,12 @@ export const lineParser = line => {
   const isNoArgsCommand = ['up', 'cd', 'ls', '.exit'].some(item => item === command) && !args.length;
   const isOneArgCommand = ['cd', 'cat', 'add', 'rm', 'os', 'hash'].some(item => item === command) && args.length === 1;
   const isTwoArgsCommand = ['rn', 'cp', 'mv'].some(item => item === command) && args.length === 2;
-  const isZip = ['compress', 'decompress'].some(item => item === command) && args.length === 1 || args.length === 2;
+  const isZip = ['compress', 'decompress'].some(item => item === command) && 3 > args.length > 0;
+
   return isOneArgCommand || isTwoArgsCommand || isNoArgsCommand || isZip ? [command, args] : null;
 }
+
+export const checkFile = async fileName => (await fs.lstat(path.resolve(fileName))).isFile();
 
 export const init = (username, userHomeDir) => {
   welcomeMessage(username);
