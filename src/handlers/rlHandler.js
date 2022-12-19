@@ -1,4 +1,4 @@
-import { ERROR_MSG } from "../model/env.js";
+import { ERROR_MSG, HELP } from "../model/env.js";
 import { exitApp, getDir, lineParser } from "../utils/utils.js";
 import { add, cat, copy, move, remove, rename } from "./basic.js";
 import { hash } from "./hash.js";
@@ -66,6 +66,10 @@ export const rlHandler = (line, username) => {
         }
         case ('decompress'): {
           await brotliZip(args, 'unzip');
+          break;
+        }
+        case ('help'): {
+          console.table(HELP);
           break;
         }
       }
