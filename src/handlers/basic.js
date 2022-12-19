@@ -20,7 +20,10 @@ export const cat = async arg => {
 
 export const add = async arg => {
   try {
-    await fs.writeFile(path.resolve(arg[0]), '');
+    const regex = /\/|\\/g;
+    const isPath = regex.test(arg[0]);
+    if (!isPath) await fs.writeFile(path.resolve(arg[0]), '');
+    else throw new Error();
   } catch {
     console.error(OP_FAILED);
   };
