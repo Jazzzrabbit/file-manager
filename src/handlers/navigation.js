@@ -19,10 +19,10 @@ export const changeDirectory = args => {
 export const list = async () => {
   const list = await fs.readdir(path.resolve(process.cwd()), { withFileTypes: true });
   const unsortedList = list
-    .map(file => file.isDirectory() ? { value: file.name, type: 'folder' } : { value: file.name, type: 'file' });
+    .map(file => file.isDirectory() ? { value: file.name, type: 'directory' } : { value: file.name, type: 'file' });
   const sortedList = unsortedList
     .sort((a, b) => a.value.toLowerCase() < b.value.toLowerCase() ? 1 : -1)
-    .sort((a, b) => a.type < b.type ? 1 : -1);
+    .sort((a, b) => a.type > b.type ? 1 : -1);
 
   sortedList.length ? console.table(sortedList) : console.log('This folder is empty.');
 };

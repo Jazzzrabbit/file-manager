@@ -15,7 +15,11 @@ export const brotliZip = async (args, flag = 'zip') => {
       const rs = createReadStream(path.resolve(pathToFile));
       const ws = pathToCompressedFile === '.' ? createWriteStream(path.resolve(pathToCompressedFile, basename)) :
         createWriteStream(path.resolve(pathToCompressedFile));
-      const brotli = flag === 'zip' ? Zlib.createBrotliCompress() : Zlib.createBrotliDecompress();
+      const brotli = flag === 'zip' ? Zlib.createBrotliCompress({
+        params: {
+          [Zlib.constants.BROTLI_PARAM_QUALITY]: Zlib.constants.BROTLI_MIN_QUALITY,
+        },
+      }) : Zlib.createBrotliDecompress();
       await pipeline(rs, brotli, ws);
     } else throw new Error();
   } catch {

@@ -5,7 +5,7 @@ export const getUsername = () => {
   const args = process.argv.slice(2);
   const userCommand = '--username=';
   
-  if (!args[0].match(userCommand)) return;
+  if (args.length < 1 || !args[0].match(userCommand)) return;
 
   const username = args[0].trim().replace(userCommand, '');
   
@@ -39,7 +39,8 @@ export const lineParser = line => {
   const isNoArgsCommand = ['up', 'cd', 'ls', '.exit', 'help'].some(item => item === command) && !args.length;
   const isOneArgCommand = ['cd', 'cat', 'add', 'rm', 'os', 'hash'].some(item => item === command) && args.length === 1;
   const isTwoArgsCommand = ['rn', 'cp', 'mv'].some(item => item === command) && args.length === 2;
-  const isZip = ['compress', 'decompress'].some(item => item === command) && 3 > args.length > 0;
+  const isZip = ['compress', 'decompress'].some(item => item === command) && args.length === 1 || 
+    ['compress', 'decompress'].some(item => item === command) && args.length === 2;
 
   return isOneArgCommand || isTwoArgsCommand || isNoArgsCommand || isZip ? [command, args] : null;
 };
@@ -48,7 +49,7 @@ export const checkFile = async fileName => (await fs.lstat(path.resolve(fileName
 
 export const init = (username, userHomeDir) => {
   if (!username) {
-    console.log('Please, enter your name in following format: -- --username=your_username');
+    console.log('Please, enter your name in the following format: -- --username=your_username');
     process.exit();
   } else {
     welcomeMessage(username);
